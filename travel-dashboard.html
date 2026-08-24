@@ -98,8 +98,9 @@ a:hover{
         <h2>🌪️ Pacific Storm Status</h2>
 
         <div id="stormStatus">
-            🟢 Geen actieve waarschuwingen
+            ⏳ NOAA controleren...
         </div>
+
 
     </div>
 
@@ -394,11 +395,61 @@ function determineCurrentLocation(){
     document.getElementById("todayLocation").innerHTML =
     `📍 Vandaag bevinden we ons in <strong>${location}</strong>`;
 }
+
+async function loadStormStatus(){
+
+    try{
+
+        const response =
+        await fetch(
+            "https://www.nhc.noaa.gov/gtwo.xml"
+        );
+
+        const text =
+        await response.text();
+
+        if(
+            text.includes("Tropical Storm") ||
+            text.includes("Hurricane")
+        ){
+
+            document.getElementById("stormStatus").innerHTML =
+            "🔴 Actief tropisch systeem gedetecteerd";
+
+        }
+        else if(
+            text.includes("Disturbance") ||
+            text.includes("Potential")
+        ){
+
+            document.getElementById("stormStatus").innerHTML =
+            "🟡 Tropische storing in observatie";
+
+        }
+        else{
+
+            document.getElementById("stormStatus").innerHTML =
+            "🟢 Geen actieve systemen";
+
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("stormStatus").innerHTML =
+        "⚠️ NOAA-status niet beschikbaar";
+
+        console.log(error);
+    }
+
+}
     
 loadTripPlan();
     
 loadWeather();
-  
+
+loadStormStatus();
+    
 </script>
   
 </body>
