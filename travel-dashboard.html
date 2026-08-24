@@ -91,19 +91,6 @@ a:hover{
 
     <h1>✈️ Travel Command Center</h1>
 
-    <!-- STORM STATUS -->
-
-    <div class="card">
-
-        <h2>🌪️ Pacific Storm Status</h2>
-
-        <div id="stormStatus">
-            ⏳ NOAA controleren...
-        </div>
-
-
-    </div>
-
     <!-- WEER -->
 
     <div class="row">
@@ -118,7 +105,7 @@ a:hover{
 
     </div>
 
-    <!-- LINKS + HUIDIGE LOCATIE -->
+    <!-- LINKS -->
 
     <div class="row">
 
@@ -178,14 +165,6 @@ a:hover{
         
         </div>
 
-        <div class="card">
-
-            <h2>📍 Huidige locatie</h2>
-
-            <div id="todayLocation"></div>
-
-        </div>
-
     </div>
 
     <!-- REISPLANNING -->
@@ -210,79 +189,79 @@ a:hover{
 const locations = [
 
 {
-    name:"Denver",
+    name:"2 - 4 September - Denver ",
     latitude:39.7392,
     longitude:-104.9903,
     timezone:"America/Denver"
 },
 {
-    name:"Moab",
+    name:"4 - 5 September - Moab",
     latitude:38.5733,
     longitude:-109.5498,
     timezone:"America/Denver"
 },
 {
-    name:"Monument Valley",
+    name:"5 - 6 September - Monument Valley",
     latitude:36.9980,
     longitude:-110.0985,
     timezone:"America/Denver"
 },
 {
-    name:"Page",
+    name:"6 - 7 September - Page",
     latitude:36.9147,
     longitude:-111.4558,
     timezone:"America/Phoenix"
 },
 {
-    name:"Bryce Canyon City",
+    name:"7 - 8 September - Bryce Canyon City",
     latitude:37.6720,
     longitude:-112.1560,
     timezone:"America/Denver"
 },
 {
-    name:"Zion National Park",
+    name:"8 - 9 September - Zion National Park",
     latitude:37.2982,
     longitude:-113.0263,
     timezone:"America/Denver"
 },
 {
-    name:"Las Vegas",
+    name:"9 - 10 September - Las Vegas",
     latitude:36.1699,
     longitude:-115.1398,
     timezone:"America/Los_Angeles"
 },
 {
-    name:"Furnace Creek",
+    name:"10 - 11 September - Furnace Creek",
     latitude:36.4570,
     longitude:-116.8669,
     timezone:"America/Los_Angeles"
 },
 {
-    name:"Anaheim",
+    name:"11 - 13 September - Anaheim",
     latitude:33.8366,
     longitude:-117.9143,
     timezone:"America/Los_Angeles"
 },
 {
-    name:"Honolulu",
+    name:"14 - 16 September - Honolulu",
     latitude:21.3069,
     longitude:-157.8583,
     timezone:"Pacific/Honolulu"
 },
 {
-    name:"Volcano",
+    name:"16 - 18 September - Volcano",
     latitude:19.4194,
     longitude:-155.2885,
     timezone:"Pacific/Honolulu"
 },
 {
-    name:"Kailua-Kona",
+    name:"18 - 20 September - Kailua-Kona",
     latitude:19.6400,
     longitude:-155.9969,
     timezone:"Pacific/Honolulu"
 },
 {
-    name:"Kihei",
+    name:"20 - 23 September - Kihei",
     latitude:20.7850,
     longitude:-156.4656,
     timezone:"Pacific/Honolulu"
@@ -396,59 +375,13 @@ function determineCurrentLocation(){
     `📍 Vandaag bevinden we ons in <strong>${location}</strong>`;
 }
 
-async function loadStormStatus(){
 
-    try{
-
-        const response =
-        await fetch(
-            "https://www.nhc.noaa.gov/gtwo.xml"
-        );
-
-        const text =
-        await response.text();
-
-        if(
-            text.includes("Tropical Storm") ||
-            text.includes("Hurricane")
-        ){
-
-            document.getElementById("stormStatus").innerHTML =
-            "🔴 Actief tropisch systeem gedetecteerd";
-
-        }
-        else if(
-            text.includes("Disturbance") ||
-            text.includes("Potential")
-        ){
-
-            document.getElementById("stormStatus").innerHTML =
-            "🟡 Tropische storing in observatie";
-
-        }
-        else{
-
-            document.getElementById("stormStatus").innerHTML =
-            "🟢 Geen actieve systemen";
-
-        }
-
-    }
-    catch(error){
-
-        document.getElementById("stormStatus").innerHTML =
-        "⚠️ NOAA-status niet beschikbaar";
-
-        console.log(error);
-    }
-
-}
     
 loadTripPlan();
     
 loadWeather();
-
-loadStormStatus();
+    
+determineCurrentLocation();
     
 </script>
   
