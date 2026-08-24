@@ -32,7 +32,7 @@ h1{
     margin-bottom:20px;
 }
 
-.card{F
+.card{
     flex:1;
     background:white;
     border-radius:15px;
@@ -211,47 +211,56 @@ const locations = [
 {
     name:"Denver",
     latitude:39.7392,
-    longitude:-104.9903
+    longitude:-104.9903,
+    timezone:"America/Denver"
 },
 {
     name:"Moab",
     latitude:38.5733,
-    longitude:-109.5498
+    longitude:-109.5498,
+    timezone:"America/Denver"
 },
 {
     name:"Monument Valley",
     latitude:36.9980,
-    longitude:-110.0985
+    longitude:-110.0985,
+    timezone:"America/Denver"
 },
 {
     name:"Page",
     latitude:36.9147,
-    longitude:-111.4558
+    longitude:-111.4558,
+    timezone:"America/Phoenix"
 },
 {
     name:"Las Vegas",
     latitude:36.1699,
-    longitude:-115.1398
+    longitude:-115.1398,
+    timezone:"America/Los_Angeles"
 },
 {
     name:"Honolulu",
     latitude:21.3069,
-    longitude:-157.8583
+    longitude:-157.8583,
+    timezone:"Pacific/Honolulu"
 },
 {
     name:"Volcano",
     latitude:19.4194,
-    longitude:-155.2885
+    longitude:-155.2885,
+    timezone:"Pacific/Honolulu"
 },
 {
     name:"Kailua-Kona",
     latitude:19.6400,
-    longitude:-155.9969
+    longitude:-155.9969,
+    timezone:"Pacific/Honolulu"
 },
 {
     name:"Kihei",
     latitude:20.7850,
-    longitude:-156.4656
+    longitude:-156.4656,
+    timezone:"Pacific/Honolulu"
 }
 
 ];
@@ -272,10 +281,22 @@ async function loadWeather(){
             const data =
             await response.json();
 
+            const localTime =
+                new Date().toLocaleTimeString(
+                    "nl-BE",
+                    {
+                        timeZone: location.timezone,
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+            
             html += `
             <div class="weatherCard">
             
                 <strong>${location.name}</strong><br>
+            
+                🕒 ${localTime}<br>
             
                 🌡️ ${data.current.temperature_2m}°C<br>
             
