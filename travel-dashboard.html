@@ -65,7 +65,16 @@ a:hover{
 <h1>✈️ Travel Command Center</h1>
 
 <div class="row">
+<div class="card">
+    <h2>🌪️ Pacific Storm Status</h2>
 
+    <div id="stormStatus">
+
+        🟢 Geen actieve waarschuwingen
+
+    </div>
+
+</div>
     <div class="card">
         <h2>🌤️ Weer</h2>
         <div id="weather"></div>
@@ -112,7 +121,9 @@ a:hover{
         </a>
 
     </div>
-
+    
+    <div id="todayLocation"></div>
+    
     <div class="card">
         <h2>✈️ Reisplanning</h2>
 
@@ -120,6 +131,27 @@ a:hover{
 
     </div>
 
+<div class="card">
+
+<h2>✈️ Belangrijke vluchten</h2>
+
+<ul>
+<li>02/09 Brussel → Denver</li>
+<li>14/09 Los Angeles → Honolulu</li>
+<li>24/09 Hawaii → België</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>⏳ Volgende verplaatsing</h2>
+
+<div id="countdown"></div>
+
+</div>    
+    
 </div>    
     
 </div>
@@ -185,7 +217,13 @@ async function loadWeather(){
         try{
 
             const url =
-            `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`;
+            `https://api.open-meteo.com/v1/forecast
+            ?latitude=${location.latitude}
+            &longitude=${location.longitude}
+            &current=temperature_2m
+            &daily=temperature_2m_max,temperature_2m_min
+            &timezone=auto`;
+
 
             const response =
             await fetch(url);
@@ -194,10 +232,12 @@ async function loadWeather(){
             await response.json();
 
             html += `
-                <p>
-                <strong>${location.name}</strong><br>
-                ${data.current.temperature_2m}°C
-                </p>
+            <p>
+            <strong>${location.name}</strong><br>
+            Nu: ${data.current.temperature_2m}°C<br>
+            Max: ${data.daily.temperature_2m_max[0]}°C<br>
+            Min: ${data.daily.temperature_2m_min[0]}°C
+            </p>
             `;
 
         }
@@ -238,6 +278,32 @@ function loadTripPlan(){
     html;
 }
 
+function determineCurrentLocation(){
+
+    const today = new Date();
+
+    const day = today.getDate();
+
+    let location = "België";
+
+    if(day >= 2 && day <= 3) location = "Denver";
+    else if(day === 4) location = "Moab";
+    else if(day === 5) location = "Monument Valley";
+    else if(day === 6) location = "Page";
+    else if(day === 7) location = "Bryce Canyon";
+    else if(day === 8) location = "Zion";
+    else if(day === 9) location = "Las Vegas";
+    else if(day === 10) location = "Death Valley";
+    else if(day >= 11 && day <= 13) location = "Anaheim";
+    else if(day >= 14 && day <= 15) location = "Honolulu";
+    else if(day >= 16 && day <= 17) location = "Volcanoes NP";
+    else if(day >= 18 && day <= 19) location = "Kailua-Kona";
+    else if(day >= 20 && day <= 23) location = "Maui";
+
+    document.getElementById("todayLocation").innerHTML =
+    `📍 Vandaag bevinden we ons in <strong>${location}</strong>`;
+}
+    
 loadTripPlan();
     
 loadWeather();
