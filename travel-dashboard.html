@@ -167,19 +167,6 @@ a:hover{
 
     </div>
 
-    <!-- REISPLANNING -->
-
-    <div class="row">
-
-        <div class="card">
-
-            <h2>✈️ Reisplanning</h2>
-
-            <div id="tripPlan"></div>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -340,28 +327,6 @@ async function loadWeather(){
     html;
 }
 
-function loadTripPlan(){
-
-    const html = `
-        02-03/09 - Denver<br>
-        04/09 - Moab<br>
-        05/09 - Monument Valley<br>
-        06/09 - Page<br>
-        07/09 - Bryce Canyon<br>
-        08/09 - Zion National Park<br>
-        09/09 - Las Vegas<br>
-        10/09 - Death Valley<br>
-        11-13/09 - Anaheim (BlizzCon)<br>
-        14-15/09 - Honolulu<br>
-        16-17/09 - Volcanoes NP<br>
-        18-19/09 - Kailua-Kona<br>
-        20-23/09 - Maui<br>
-        24-25/09 - Terugvlucht
-    `;
-
-    document.getElementById("tripPlan").innerHTML =
-    html;
-}
 
 function determineCurrentLocation(){
 
