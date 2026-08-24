@@ -69,7 +69,18 @@ a:hover{
     font-size:22px;
     color:#004a99;
 }
-    
+
+#weather{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:10px;
+}
+
+.weatherCard{
+    background:#f5f7fa;
+    padding:10px;
+    border-radius:10px;
+}    
 
 </style>
 </head>
@@ -234,14 +245,7 @@ async function loadWeather(){
 
         try{
 
-            const url =
-            `https://api.open-meteo.com/v1/forecast
-            ?latitude=${location.latitude}
-            &longitude=${location.longitude}
-            &current=temperature_2m
-            &daily=temperature_2m_max,temperature_2m_min
-            &timezone=auto`;
-
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
 
             const response =
             await fetch(url);
@@ -250,12 +254,17 @@ async function loadWeather(){
             await response.json();
 
             html += `
-            <p>
-            <strong>${location.name}</strong><br>
-            Nu: ${data.current.temperature_2m}°C<br>
-            Max: ${data.daily.temperature_2m_max[0]}°C<br>
-            Min: ${data.daily.temperature_2m_min[0]}°C
-            </p>
+            <div class="weatherCard">
+            
+                <strong>${location.name}</strong><br>
+            
+                🌡️ ${data.current.temperature_2m}°C<br>
+            
+                ⬆️ ${data.daily.temperature_2m_max[0]}°C
+            
+                ⬇️ ${data.daily.temperature_2m_min[0]}°C
+            
+            </div>
             `;
 
         }
